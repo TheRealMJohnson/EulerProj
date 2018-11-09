@@ -4,7 +4,6 @@
 //
 //  Created by Matthew Johnson on 2018-11-08.
 //  Copyright © 2018 Matthew Johnson. All rights reserved.
-// This requires too much memory to successfully run
 
 #include <iostream>
 #include <vector>
@@ -62,7 +61,7 @@ int main(int argc, const char * argv[]) {
     }
 #ifdef debug
     std::cout << "Solutions: {\n";
-    for (unsigned long int i = 0; i < ASSUMED_SPAN; i++) {
+    for (unsigned long int i = 0; i < 1000000; i++) {
         std::cout << solutions[i] << ", ";
     }
     std::cout << "}\n";
