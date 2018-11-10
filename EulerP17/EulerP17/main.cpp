@@ -19,6 +19,7 @@ const std::string tens[10] = {"", "ten", "twenty", "thirty", "forty", "fifty", "
 //this format repeats every 3 significant digits with a different qualifier (thousand, million, billion)
 //following format NNN qualifier NNN qualifier
 //N hundred, tens/teens + teens/ones
+//drops a - at the end of 1000's name: bug avoided by ignoring character in count
 std:: string getNumberName(unsigned int val) {
     std::string name = "";
     if(val >= 1000) {
