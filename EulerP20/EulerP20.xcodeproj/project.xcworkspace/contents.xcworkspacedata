@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:EulerP20.xcodeproj">
+      location = "group:../EulerP20/DataStructures/DataStructures">
+   </FileRef>
+   <FileRef
+      location = "group:../EulerP20">
+   </FileRef>
+   <FileRef
+      location = "group:../EulerP20/DataStructures">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

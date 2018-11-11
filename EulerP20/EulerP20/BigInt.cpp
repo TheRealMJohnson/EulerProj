@@ -1,19 +1,16 @@
 //
-//  main.cpp
-//  EulerP20
+//  BigInt.cpp
+//  DataStructures
 //
 //  Created by Matthew Johnson on 2018-11-10.
 //  Copyright © 2018 Matthew Johnson. All rights reserved.
 //
 
+#include "BigInt.hpp"
 #include <iostream>
 
-struct Node {
-    Node * next = nullptr;
-    int val = 0;
-};
 
-int clean(Node * curr) {
+int BigInt::clean(Node * curr) {
     int toAdd = 0;
     if(curr) {
         toAdd = clean(curr->next);
@@ -26,7 +23,7 @@ int clean(Node * curr) {
     }
 }
 
-Node * cleanRoot(Node * root) {
+BigInt::Node * BigInt::cleanRoot(Node * root) {
     int result = clean(root);
     
     while(result != 0) {
@@ -40,7 +37,7 @@ Node * cleanRoot(Node * root) {
     return root;
 }
 
-void printList(Node * root) {
+void BigInt::printList(Node * root) {
     std::cout << "[";
     while (root) {
         std::cout << root->val << ", ";
@@ -51,7 +48,7 @@ void printList(Node * root) {
 
 //BUG: longer list of the two must be the latter
 //bug removed???
-Node * getMultiplication(Node * rootA, Node * rootB) {
+BigInt::Node * BigInt::getMultiplication(Node * rootA, Node * rootB) {
     Node * currA;
     Node * currB;
     Node * currOut;
@@ -77,11 +74,11 @@ Node * getMultiplication(Node * rootA, Node * rootB) {
         currA = currA->next;
         
     } while (currA);
-    rootOut = cleanRoot(rootOut);
+    //rootOut = cleanRoot(rootOut);
     return rootOut;
 }
 
-void deleteList(Node * root) {
+void BigInt::deleteList(Node * root) {
     Node * next;
     while (root) {
         next = root->next;
@@ -90,32 +87,44 @@ void deleteList(Node * root) {
     }
 }
 
-unsigned long long int sumList(Node * root) {
-    unsigned long long int sum = 0;
-    while (root) {
-        sum += root->val;
-        root = root->next;
-    }
-    return sum;
+void BigInt::printList() {
+    printList(root);
 }
-int main(int argc, const char * argv[]) {
-   
-    Node * result = new Node;
-    result->val = 1;
-    Node * tmp;
-    
-    Node * iterator = new Node;
-    
-    for(int i = 1; i <= 100; i++) {
-        iterator->val = i;
-        tmp = getMultiplication(result, iterator);
-        deleteList(result);
-        result = tmp;
+void BigInt::cleanRoot() {
+    root = cleanRoot(root);
+}
+BigInt * BigInt::getMultiplication(BigInt & rootA) {
+    BigInt * returnBigInt = new BigInt;
+    returnBigInt->root = getMultiplication(root, rootA.root);
+    return returnBigInt;
+}
+
+void BigInt::pushBack(int pushedVal) {
+    if(!root) {
+        root = new Node;
+        root->val = pushedVal;
+        return;
     }
-    
-    std::cout << "Hello, World!\n";
-    
-    std::cout << "sum of list is: [" << sumList(result) << "]\n";
-    
-    return 0;
+    Node * iterator = root;
+    while (iterator->next) {
+        iterator = iterator->next;
+    }
+    iterator->next = new Node;
+    iterator->next->val = pushedVal;
+}
+
+void BigInt::popBack() {
+    if(!root) {
+        return;
+    }
+    if(!(root->next)) {
+        free(root);
+        root = nullptr;
+    }
+    Node * iterator = root;
+    while (iterator->next->next) {
+        iterator = iterator->next;
+    }
+    free(iterator->next);
+    iterator->next = nullptr;
 }
